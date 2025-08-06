@@ -13,36 +13,44 @@
       gtag('js', new Date());
       gtag('config', 'G-WG5TKP744Z');
 
+      // Evento página aberta
       gtag('event', 'form_aberto', {form_name: 'ASSINATURA RENOVA BE'});
 
+      // Evento formulário carregado
       function formCarregado() {
           gtag('event', 'form_carregado', {form_name: 'ASSINATURA RENOVA BE'});
-          iniciarRastreamento();
+          tentarRastrearPerguntas();
       }
 
-      function iniciarRastreamento() {
-          const iframe = document.querySelector("iframe");
+      // Função para rastrear perguntas e envio
+      function tentarRastrearPerguntas() {
           try {
-              const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-              const perguntas = innerDoc.querySelectorAll("input, textarea, select");
+              const iframe = document.querySelector("iframe").contentWindow.document;
 
-              perguntas.forEach((pergunta, index) => {
-                  pergunta.addEventListener("focus", () => {
+              // Rastrear cliques em campos de texto, radio, checkbox
+              iframe.querySelectorAll("input, textarea, select").forEach((campo, index) => {
+                  campo.addEventListener("focus", () => {
                       gtag('event', 'pergunta_iniciada', {
                           pergunta_numero: index + 1,
                           form_name: 'ASSINATURA RENOVA BE'
                       });
                   });
               });
+
+              // Rastrear clique no botão de envio
+              iframe.querySelectorAll("button, input[type=submit]").forEach(botao => {
+                  botao.addEventListener("click", () => {
+                      gtag('event', 'form_enviado', {form_name: 'ASSINATURA RENOVA BE'});
+                  });
+              });
           } catch (e) {
-              console.log("O rastreamento detalhado pode estar limitado por segurança do Microsoft Forms.");
+              console.warn("Não foi possível rastrear perguntas diretamente (limite de segurança do Microsoft Forms).");
           }
       }
     </script>
 
-    <!-- Fonte moderna -->
+    <!-- Fonte e estilo -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
-
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -75,7 +83,6 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             overflow: hidden;
-            animation: fadeIn 0.8s ease-in-out;
         }
         iframe {
             width: 100%;
@@ -87,10 +94,6 @@
             padding: 10px;
             font-size: 0.85rem;
             color: #f1f1f1;
-        }
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(15px);}
-            to {opacity: 1; transform: translateY(0);}
         }
     </style>
 </head>
