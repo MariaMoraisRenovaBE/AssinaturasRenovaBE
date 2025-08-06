@@ -17,13 +17,32 @@
 
       function formCarregado() {
           gtag('event', 'form_carregado', {form_name: 'ASSINATURA RENOVA BE'});
+          iniciarRastreamento();
+      }
+
+      function iniciarRastreamento() {
+          const iframe = document.querySelector("iframe");
+          try {
+              const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+              const perguntas = innerDoc.querySelectorAll("input, textarea, select");
+
+              perguntas.forEach((pergunta, index) => {
+                  pergunta.addEventListener("focus", () => {
+                      gtag('event', 'pergunta_iniciada', {
+                          pergunta_numero: index + 1,
+                          form_name: 'ASSINATURA RENOVA BE'
+                      });
+                  });
+              });
+          } catch (e) {
+              console.log("O rastreamento detalhado pode estar limitado por segurança do Microsoft Forms.");
+          }
       }
     </script>
 
     <!-- Fonte moderna -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
 
-    <!-- Estilo moderno -->
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -82,7 +101,6 @@
     </header>
 
     <div class="container">
-        <!-- Microsoft Forms incorporado -->
         <iframe 
             src="https://forms.office.com/Pages/ResponsePage.aspx?id=crikafILJ02zO25op-njrg8uzw_QEQ9Low1KkgJVd89UQUNNM0dJWFBPOEJLMEFZUVBNMktRMVgwQi4u&embed=true"
             onload="formCarregado();">
