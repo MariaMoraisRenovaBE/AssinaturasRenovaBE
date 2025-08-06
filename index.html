@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa Renova Be</title>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WG5TKP744Z"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WG5TKP744Z');
+
+      // Evento quando a página carrega
+      gtag('event', 'form_aberto', {form_name: 'ASSINATURA RENOVA BE'});
+
+      // Função para enviar evento quando o usuário foca em uma pergunta
+      function trackQuestion(questionNumber) {
+          gtag('event', 'form_pergunta_iniciada', {
+              pergunta: questionNumber,
+              form_name: 'ASSINATURA RENOVA BE'
+          });
+      }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            background: #d61392;
+            color: white;
+            padding: 15px;
+        }
+        iframe {
+            width: 100%;
+            height: 900px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pesquisa Renova Be</h1>
+
+    <!-- Microsoft Forms incorporado -->
+    <iframe src="https://forms.office.com/Pages/ResponsePage.aspx?id=crikafILJ02zO25op-njrg8uzw_QEQ9Low1KkgJVd89UQUNNM0dJWFBPOEJLMEFZUVBNMktRMVgwQi4u"
+            onload="gtag('event', 'form_carregado', {form_name: 'ASSINATURA RENOVA BE'});">
+    </iframe>
+
+</body>
+</html>
