@@ -14,9 +14,25 @@
     gtag('config', 'G-WG5TKP744Z');
 
     window.onload = () => {
+      // Evento: formulário aberto
       gtag('event', 'form_aberto', {
         form_name: 'PESQUISA_RENOVA_BE'
       });
+
+      // Evento: formulário carregado (após o iframe estar presente)
+      gtag('event', 'form_carregado', {
+        form_name: 'PESQUISA_RENOVA_BE'
+      });
+
+      // Pré-configuração para futuro envio de pergunta
+      window.addEventListener("message", function(event) {
+        if (event.data && event.data.type === "pergunta") {
+          gtag('event', 'form_pergunta_iniciada', {
+            form_name: 'PESQUISA_RENOVA_BE',
+            pergunta_numero: event.data.numero
+          });
+        }
+      }, false);
     };
   </script>
 
@@ -49,6 +65,7 @@
       color: #d61392;
       margin: 20px 0;
       font-size: 26px;
+      text-align: center;
     }
 
     iframe {
@@ -75,8 +92,7 @@
 
   <iframe 
     src="https://tally.so/r/w7kpe9"
-    allow="fullscreen"
-    onload="gtag('event', 'form_carregado', { form_name: 'PESQUISA_RENOVA_BE' });">
+    allowfullscreen>
   </iframe>
 </body>
 </html>
