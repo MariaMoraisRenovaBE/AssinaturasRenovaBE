@@ -13,59 +13,70 @@
     gtag('js', new Date());
     gtag('config', 'G-WG5TKP744Z');
 
-    // Evento: ao abrir o site
     window.onload = () => {
       gtag('event', 'form_aberto', {
-        form_name: 'ASSINATURA RENOVA BE'
+        form_name: 'PESQUISA_RENOVA_BE'
       });
     };
-
-    // Função: quando inicia pergunta (chamável via postMessage)
-    function trackQuestion(questionNumber) {
-      gtag('event', 'form_pergunta_iniciada', {
-        pergunta_numero: questionNumber,
-        form_name: 'ASSINATURA RENOVA BE'
-      });
-    }
-
-    // Escuta mensagens de um sistema externo (não funciona com Microsoft Forms diretamente, mas mantido para upgrade futuro)
-    window.addEventListener("message", function(event) {
-      if (event.data && event.data.type === "pergunta") {
-        trackQuestion(event.data.numero);
-      }
-    }, false);
   </script>
 
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to right, #f72585, #7209b7);
-      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffffff;
+      color: #222222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    header {
+      width: 100%;
+      background-color: #000;
+      padding: 20px 0;
       text-align: center;
     }
 
+    header img {
+      height: 60px;
+    }
+
     h1 {
-      padding: 20px;
-      font-size: 28px;
+      color: #d61392;
+      margin: 20px 0;
+      font-size: 26px;
     }
 
     iframe {
       width: 100%;
+      max-width: 1000px;
       height: 900px;
       border: none;
     }
+
+    @media (max-width: 768px) {
+      iframe {
+        height: 1200px;
+      }
+    }
   </style>
 </head>
-<body>
 
-  <h1>Pesquisa de Satisfação - Renova Be</h1>
+<body>
+  <header>
+    <img src="https://i.ibb.co/chSdvTzv/Captura-de-tela-2025-08-07-092118.png" alt="Renova Be" />
+  </header>
+
+  <h1>Pesquisa de Satisfação Renova Be</h1>
 
   <iframe 
-    src="https://forms.office.com/Pages/ResponsePage.aspx?id=crikafILJ02zO25op-njrg8uzw_QEQ9Low1KkgJVd89UQUNNM0dJWFBPOEJLMEFZUVBNMktRMVgwQi4u"
-    onload="gtag('event', 'form_carregado', {form_name: 'ASSINATURA RENOVA BE'});">
+    src="https://tally.so/r/w7kpe9"
+    allow="fullscreen"
+    onload="gtag('event', 'form_carregado', { form_name: 'PESQUISA_RENOVA_BE' });">
   </iframe>
-
 </body>
 </html>
