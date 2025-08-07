@@ -9,7 +9,8 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WG5TKP744Z"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
+
     gtag('js', new Date());
     gtag('config', 'G-WG5TKP744Z');
 
@@ -19,20 +20,36 @@
         form_name: 'PESQUISA_RENOVA_BE'
       });
 
-      // Evento: formulário carregado (após o iframe estar presente)
+      // Evento: formulário carregado
       gtag('event', 'form_carregado', {
         form_name: 'PESQUISA_RENOVA_BE'
       });
 
-      // Pré-configuração para futuro envio de pergunta
-      window.addEventListener("message", function(event) {
-        if (event.data && event.data.type === "pergunta") {
-          gtag('event', 'form_pergunta_iniciada', {
-            form_name: 'PESQUISA_RENOVA_BE',
-            pergunta_numero: event.data.numero
-          });
-        }
-      }, false);
+      // 👇 Observador para rastrear perguntas visíveis no formulário
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach(() => {
+          const activeQuestion = document.querySelector('[data-block-id][style*="opacity: 1"]');
+          if (activeQuestion) {
+            const questionText = activeQuestion.innerText?.split('\n')[0]?.trim();
+
+            if (questionText && window.lastSent !== questionText) {
+              window.lastSent = questionText;
+
+              gtag('event', 'form_pergunta_iniciada', {
+                form_name: 'PESQUISA_RENOVA_BE',
+                pergunta_texto: questionText
+              });
+
+              console.log("🔔 Evento enviado para GA4:", questionText);
+            }
+          }
+        });
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
     };
   </script>
 
