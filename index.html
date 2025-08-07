@@ -11,30 +11,24 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-WG5TKP744Z');
 
-    // Evento ao carregar o formulário
-    gtag('event', 'form_carregado', {
-      form_name: 'ASSINATURA RENOVA BE'
-    });
-
-    // Evento ao abrir o site
+    // Evento: ao abrir o site
     window.onload = () => {
       gtag('event', 'form_aberto', {
         form_name: 'ASSINATURA RENOVA BE'
       });
     };
 
-    // Envia evento sempre que uma pergunta for focada
+    // Função: quando inicia pergunta (chamável via postMessage)
     function trackQuestion(questionNumber) {
-      gtag('event', 'pergunta_iniciada', {
-        form_name: 'ASSINATURA RENOVA BE',
-        pergunta_numero: questionNumber
+      gtag('event', 'form_pergunta_iniciada', {
+        pergunta_numero: questionNumber,
+        form_name: 'ASSINATURA RENOVA BE'
       });
     }
 
-    // Detecta interações no iframe (simplificado, pois Forms não permite rastreamento direto das perguntas)
+    // Escuta mensagens de um sistema externo (não funciona com Microsoft Forms diretamente, mas mantido para upgrade futuro)
     window.addEventListener("message", function(event) {
       if (event.data && event.data.type === "pergunta") {
         trackQuestion(event.data.numero);
@@ -65,10 +59,13 @@
   </style>
 </head>
 <body>
+
   <h1>Pesquisa de Satisfação - Renova Be</h1>
 
-  <iframe src="https://forms.office.com/Pages/ResponsePage.aspx?id=crikafILJ02zO25op-njrg8uzw_QEQ9Low1KkgJVd89UQUNNM0dJWFBPOEJLMEFZUVBNMktRMVgwQi4u"
-          onload="gtag('event', 'form_carregado', {form_name: 'ASSINATURA RENOVA BE'});">
+  <iframe 
+    src="https://forms.office.com/Pages/ResponsePage.aspx?id=crikafILJ02zO25op-njrg8uzw_QEQ9Low1KkgJVd89UQUNNM0dJWFBPOEJLMEFZUVBNMktRMVgwQi4u"
+    onload="gtag('event', 'form_carregado', {form_name: 'ASSINATURA RENOVA BE'});">
   </iframe>
+
 </body>
 </html>
